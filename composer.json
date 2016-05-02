@@ -1,0 +1,13 @@
+{
+    "name": "odannyc/sipit",
+    "description": "A SIP library to send OPTION pings to publicly open SIP devices out in the wild.",
+    "authors": [
+        {
+            "name": "Danny Carrillo",
+            "email": "odannycx@gmail.com"
+        }
+    ],
+    "require-dev": {
+				"phpunit/phpunit": "*"
+		}
+}
