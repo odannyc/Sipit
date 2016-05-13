@@ -8,6 +8,16 @@
         }
     ],
     "require-dev": {
-				"phpunit/phpunit": "*"
-		}
+	   "phpunit/phpunit": "*"
+	},
+    "autoload": {
+        "psr-4": {
+            "sipit\\": "src/sipit/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\": "tests/"
+        }
+    }
 }
