@@ -84,17 +84,18 @@ class sipit {
 	 * @return string
 	 */
 	protected static function buildRequest() {
-		$data = "";
-		$data .= self::$method . " sip:" . self::$dstIp . ":" . self::$dstPort . " SIP/2.0\r\n";
+		$data = self::$method . " sip:" . self::$dstIp . ":" . self::$dstPort . " SIP/2.0\r\n";
 		$data .= "Via: SIP/2.0/UDP " . self::$srcIp . ":" . self::$srcPort . ";rport;branch=z9hG4bK572601\r\n";
 		$data .= "From: <sip:ping@sipit.com>;tag=10877\r\n";
 		$data .= "To: <sip:" . self::$dstIp . ":" . self::$dstPort . ">\r\n";
-		$data .= "Call-ID: 14360ca02e944cbc7c13bfdf1fd5abfd@" . self::$srcIp . "\r\n";
+		$data .= "Call-ID: " . md5(uniqid()). "@" . self::$srcIp . "\r\n";
 		$data .= "CSeq: 20 OPTIONS\r\n";
-		$data .= "Contact: <sip:ping@sipit.com>\r\n";
+		$data .= "Contact: <sip:ping@" . self::$srcIp . ":" . self::$srcPort . ">\r\n";
 		$data .= "Max-Forwards: 70\r\n";
 		$data .= "User-Agent: " . self::$userAgent . "\r\n";
 		$data .= "Content-Length: 0";
+		$data .= "\r\n";
+		$data .= "\r\n";
 		
 		self::$request = $data;
 	}
@@ -124,7 +125,7 @@ class sipit {
 	 * @return none
 	 */
 	protected static function setSrcPort() {
-		$srcPort = 12060;
+		$srcPort = 5090;
 		self::$srcPort = $srcPort;
 	}
 
