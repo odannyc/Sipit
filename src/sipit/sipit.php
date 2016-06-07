@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the sipit package.
+ * This file is part of the Sipit package.
  *
  * Danny Carrillo <odannycx@gmail.com>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace sipit;
+namespace Sipit;
 
 use Exception;
 
@@ -17,7 +17,7 @@ use Exception;
  * A simple class to be able to send OPTIONS ping
  * packets to publicly available SIP devices
  */
-class sipit {
+class Sipit {
 
 	/* All Class Variables */
 
@@ -34,6 +34,7 @@ class sipit {
 
 	// Reponse
 	protected static $response;
+	protected static $parsedResponse;
 
 	// Request Data
 	protected static $request;
@@ -49,9 +50,9 @@ class sipit {
 	 * @return bool
 	 */
 	public static function ping($dstIp = '', $dstPort = 5060) {
-		/* Check if ip address is supplied */
-		if ($dstIp == '') {
-			throw new Exception('IP Address not supplied.');
+		/* Verify IP address is correct*/
+		if (!Helper::verifyIpFormat($dstIp)) {
+			throw new Exception('IP Address Not Formatted Correctly.');
 		} else {
 			/* Set the destination port */
 			self::$dstIp = $dstIp;
@@ -77,6 +78,15 @@ class sipit {
 
 		/* Send Request */
 		self::sendRequest();
+
+		/* Read & response */
+		self::readResponse();
+		self::parseResponse();
+
+		/* Close the connection to the socket */
+		self::closeConnection();
+
+		return self::$parsedResponse;
 	}
 
 	/**
@@ -153,7 +163,19 @@ class sipit {
 	 * @return none
 	 */
 	protected static function readResponse() {
-		socket_recvfrom(self::$socket, self::$response, 10000, 0, '', 0);
+		$emptystr = '';
+		$zeroint = 0;
+		socket_recvfrom(self::$socket, self::$response, 10000, 0, $emptystr, $zeroint);
+	}
+
+	protected static function parseResponse() {
+		preg_match('/^SIP\/2\.0 ([0-9]{3})/',self::$response,self::$parsedResponse);
+		self::$parsedResponse = self::$parsedResponse[1];
+	}
+
+	protected static function closeConnection() {
+		socket_close(self::$socket);
+		self::$response = '';
 	}
 
 }

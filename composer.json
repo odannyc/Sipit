@@ -1,5 +1,5 @@
 {
-    "name": "odannyc/sipit",
+    "name": "odannyc/Sipit",
     "description": "A SIP library to send OPTION pings to publicly open SIP devices out in the wild.",
     "authors": [
         {
@@ -12,7 +12,7 @@
 	},
     "autoload": {
         "psr-4": {
-            "sipit\\": "src/sipit/"
+            "Sipit\\": "src/Sipit/"
         }
     },
     "autoload-dev": {
