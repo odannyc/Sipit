@@ -135,8 +135,8 @@ class Sipit {
 	protected function buildSocket() {
 		$this->socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 		socket_bind($this->socket, $this->srcIp, $this->srcPort);
-		socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, array("sec"=>10,"usec"=>0));
-		socket_set_option($this->socket, SOL_SOCKET, SO_SNDTIMEO, array("sec"=>5,"usec"=>0));
+		socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, array("sec"=>1,"usec"=>0));
+		socket_set_option($this->socket, SOL_SOCKET, SO_SNDTIMEO, array("sec"=>1,"usec"=>0));
 	}
 
 	/**
