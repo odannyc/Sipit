@@ -42,31 +42,4 @@ class PingTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($res, 'No Response');
 	}
-
-	/**
-	 * Test to an IP that is not formatted correctly.
-	 * @return assertion
-	 */
-	public function testPingToWrongFormattedIP() {
-		$dstIp = '193.3.3';
-		$dstPort = 5060;
-		$res = Sipit::ping($dstIp, $dstPort);
-
-		$this->assertEquals($res, 200);
-	}
-
-	/**
-	 * Test to Sipit with empty IP address string
-	 * @return assertion
-	 */
-	public function testPingToEmptyIP() {
-		$dstIp = '';
-		$dstPort = 5060;
-
-		try {
-			Sipit::ping($dstIp, $dstPort);
-		} catch (Exception $e) {
-			$this->assertEquals('IP Address Not Formatted Correctly.', $e->getMessage());
-		}
-	}
 }
