@@ -50,21 +50,12 @@ class Sipit {
 	 * @return bool
 	 */
 	public function __construct($dstIp = '', $dstPort = 5060) {
-		/* Verify IP address is correct*/
-		if (!Helper::verifyIpFormat($dstIp)) {
-			throw new Exception('IP Address Not Formatted Correctly.');
-		} else {
-			/* Set the destination port */
-			$this->dstIp = $dstIp;
-		}
+		/* Verify IP address & port are correct */
+		Helper::verifyIpAndPort($dstIp, $dstPort);
 
 		/* Set the destination port */
-		if ($dstPort != '' && ((int)$dstPort < 1024 || (int)$dstPort > 65535)) {
-			throw new Exception('Port number not valid. Must be between 1024 and 65535.');
-		} else {
-			/* Set the destination port */
-			$this->dstPort = $dstPort;
-		}
+		$this->dstPort = $dstPort;
+		$this->dstIp = $dstIp;
 
 		/* Set source params */
 		$this->setSrcIp();
@@ -166,16 +157,25 @@ class Sipit {
 		socket_recvfrom($this->socket, $this->response, 10000, 0, $emptystr, $zeroint);
 	}
 
+	/**
+	 * Parses the response. Usually might equal to 200,400 and other SIP responses
+	 */
 	protected function parseResponse() {
 		preg_match('/^SIP\/2\.0 ([0-9]{3})/',$this->response,$this->parsedResponse);
 		$this->parsedResponse = $this->parsedResponse[1];
 	}
 
+	/**
+	 * Closes the connection to the socket.
+	 */
 	protected function closeConnection() {
 		socket_close($this->socket);
-		$this->response = '';
 	}
 
+	/**
+	 * Just returns parsed response.
+	 * @return int The response of the connection
+	 */
 	public function getParsedResponse() {
 		return $this->parsedResponse;
 	}
