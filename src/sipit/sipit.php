@@ -161,8 +161,12 @@ class Sipit {
 	 * Parses the response. Usually might equal to 200,400 and other SIP responses
 	 */
 	protected function parseResponse() {
-		preg_match('/^SIP\/2\.0 ([0-9]{3})/',$this->response,$this->parsedResponse);
-		$this->parsedResponse = $this->parsedResponse[1];
+		if (!empty($this->response)) {
+			preg_match('/^SIP\/2\.0 ([0-9]{3})/',$this->response,$this->parsedResponse);
+			$this->parsedResponse = $this->parsedResponse[1];
+		} else {
+			$this->parsedResponse = 'No Response';
+		}
 	}
 
 	/**

@@ -40,7 +40,7 @@ class PingTest extends PHPUnit_Framework_TestCase {
 		$dstPort = 5060;
 		$res = Sipit::ping($dstIp, $dstPort);
 
-		$this->assertEquals($res, 200);
+		$this->assertEquals($res, 'No Response');
 	}
 
 	/**
