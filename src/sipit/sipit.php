@@ -22,26 +22,26 @@ class Sipit {
 	/* All Class Variables */
 
 	// Source vars
-	protected static $srcIp;
-	protected static $srcPort;
+	protected $srcIp;
+	protected $srcPort;
 
 	//Destination vars
-	protected static $dstIp;
-	protected static $dstPort;
+	protected $dstIp;
+	protected $dstPort;
 
 	// Socket
-	protected static $socket;
+	protected $socket;
 
 	// Reponse
-	protected static $response;
-	protected static $parsedResponse;
+	protected $response;
+	protected $parsedResponse;
 
 	// Request Data
-	protected static $request;
+	protected $request;
 
 	/* Method Variables */
-	protected static $method = 'OPTIONS';
-	protected static $userAgent = 'SIPIT';
+	protected $method = 'OPTIONS';
+	protected $userAgent = 'SIPIT';
 
 	/**
 	 * Used to ping an IP address on a specified port number
@@ -49,13 +49,13 @@ class Sipit {
 	 * @param int $port 
 	 * @return bool
 	 */
-	public static function ping($dstIp = '', $dstPort = 5060) {
+	public function __construct($dstIp = '', $dstPort = 5060) {
 		/* Verify IP address is correct*/
 		if (!Helper::verifyIpFormat($dstIp)) {
 			throw new Exception('IP Address Not Formatted Correctly.');
 		} else {
 			/* Set the destination port */
-			self::$dstIp = $dstIp;
+			$this->dstIp = $dstIp;
 		}
 
 		/* Set the destination port */
@@ -63,58 +63,56 @@ class Sipit {
 			throw new Exception('Port number not valid. Must be between 1024 and 65535.');
 		} else {
 			/* Set the destination port */
-			self::$dstPort = $dstPort;
+			$this->dstPort = $dstPort;
 		}
 
 		/* Set source params */
-		self::setSrcIp();
-		self::setSrcPort();
+		$this->setSrcIp();
+		$this->setSrcPort();
 
 		/* Build request data */
-		self::buildRequest();
+		$this->buildRequest();
 
 		/* Create UDP socket */
-		self::buildSocket();
+		$this->buildSocket();
 
 		/* Send Request */
-		self::sendRequest();
+		$this->sendRequest();
 
 		/* Read & response */
-		self::readResponse();
-		self::parseResponse();
+		$this->readResponse();
+		$this->parseResponse();
 
 		/* Close the connection to the socket */
-		self::closeConnection();
-
-		return self::$parsedResponse;
+		$this->closeConnection();
 	}
 
 	/**
 	 * Used to build the request data
 	 * @return string
 	 */
-	protected static function buildRequest() {
-		$data = self::$method . " sip:" . self::$dstIp . ":" . self::$dstPort . " SIP/2.0\r\n";
-		$data .= "Via: SIP/2.0/UDP " . self::$srcIp . ":" . self::$srcPort . ";rport;branch=z9hG4bK572601\r\n";
+	protected function buildRequest() {
+		$data = $this->method . " sip:" . $this->dstIp . ":" . $this->dstPort . " SIP/2.0\r\n";
+		$data .= "Via: SIP/2.0/UDP " . $this->srcIp . ":" . $this->srcPort . ";rport;branch=z9hG4bK572601\r\n";
 		$data .= "From: <sip:ping@sipit.com>;tag=10877\r\n";
-		$data .= "To: <sip:" . self::$dstIp . ":" . self::$dstPort . ">\r\n";
-		$data .= "Call-ID: " . md5(uniqid()). "@" . self::$srcIp . "\r\n";
+		$data .= "To: <sip:" . $this->dstIp . ":" . $this->dstPort . ">\r\n";
+		$data .= "Call-ID: " . md5(uniqid()). "@" . $this->srcIp . "\r\n";
 		$data .= "CSeq: 20 OPTIONS\r\n";
-		$data .= "Contact: <sip:ping@" . self::$srcIp . ":" . self::$srcPort . ">\r\n";
+		$data .= "Contact: <sip:ping@" . $this->srcIp . ":" . $this->srcPort . ">\r\n";
 		$data .= "Max-Forwards: 70\r\n";
-		$data .= "User-Agent: " . self::$userAgent . "\r\n";
+		$data .= "User-Agent: " . $this->userAgent . "\r\n";
 		$data .= "Content-Length: 0";
 		$data .= "\r\n";
 		$data .= "\r\n";
 		
-		self::$request = $data;
+		$this->request = $data;
 	}
 
 	/**
 	 * Used to get the IP address of the person using it.
 	 * @return string
 	 */
-	protected static function setSrcIp() {
+	protected function setSrcIp() {
 		// running in a web server
       	if (isset($_SERVER['SERVER_ADDR'])) {
         	$srcIp = $_SERVER['SERVER_ADDR'];
@@ -127,55 +125,59 @@ class Sipit {
 	        $srcIp = $addr;
       	}
 
-      	self::$srcIp = $srcIp;
+      	$this->srcIp = $srcIp;
 	}
 
 	/**
 	 * Sets the source port
 	 * @return none
 	 */
-	protected static function setSrcPort() {
+	protected function setSrcPort() {
 		$srcPort = 5090;
-		self::$srcPort = $srcPort;
+		$this->srcPort = $srcPort;
 	}
 
 	/**
 	 * Builds the socket for the request
 	 * @return none
 	 */
-	protected static function buildSocket() {
-		self::$socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-		socket_bind(self::$socket, self::$srcIp, self::$srcPort);
-		socket_set_option(self::$socket, SOL_SOCKET, SO_RCVTIMEO, array("sec"=>10,"usec"=>0));
-		socket_set_option(self::$socket, SOL_SOCKET, SO_SNDTIMEO, array("sec"=>5,"usec"=>0));
+	protected function buildSocket() {
+		$this->socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+		socket_bind($this->socket, $this->srcIp, $this->srcPort);
+		socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, array("sec"=>10,"usec"=>0));
+		socket_set_option($this->socket, SOL_SOCKET, SO_SNDTIMEO, array("sec"=>5,"usec"=>0));
 	}
 
 	/**
 	 * Sends the request to the destination
 	 * @return none
 	 */
-	protected static function sendRequest() {
-		socket_sendto(self::$socket, self::$request, strlen(self::$request), 0, self::$dstIp, self::$dstPort);
+	protected function sendRequest() {
+		socket_sendto($this->socket, $this->request, strlen($this->request), 0, $this->dstIp, $this->dstPort);
 	}
 
 	/**
 	 * Reads the response from the destination
 	 * @return none
 	 */
-	protected static function readResponse() {
+	protected function readResponse() {
 		$emptystr = '';
 		$zeroint = 0;
-		socket_recvfrom(self::$socket, self::$response, 10000, 0, $emptystr, $zeroint);
+		socket_recvfrom($this->socket, $this->response, 10000, 0, $emptystr, $zeroint);
 	}
 
-	protected static function parseResponse() {
-		preg_match('/^SIP\/2\.0 ([0-9]{3})/',self::$response,self::$parsedResponse);
-		self::$parsedResponse = self::$parsedResponse[1];
+	protected function parseResponse() {
+		preg_match('/^SIP\/2\.0 ([0-9]{3})/',$this->response,$this->parsedResponse);
+		$this->parsedResponse = $this->parsedResponse[1];
 	}
 
-	protected static function closeConnection() {
-		socket_close(self::$socket);
-		self::$response = '';
+	protected function closeConnection() {
+		socket_close($this->socket);
+		$this->response = '';
+	}
+
+	public function getParsedResponse() {
+		return $this->parsedResponse;
 	}
 
 }

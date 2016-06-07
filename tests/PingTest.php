@@ -11,7 +11,7 @@
 
 namespace tests;
 
-use Sipit\Sipit;
+use Sipit\SipitFactory as Sipit;
 use PHPUnit_Framework_TestCase;
 
 /**
