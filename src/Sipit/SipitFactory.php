@@ -19,7 +19,7 @@ class SipitFactory
     public static function ping($dstIp = '', $dstPort = 5060)
     {
         $result = new Sipit($dstIp, $dstPort);
-        
+
         return $result->getParsedResponse();
     }
 }

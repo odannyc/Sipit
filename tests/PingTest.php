@@ -11,8 +11,8 @@
 
 namespace tests;
 
-use Sipit\SipitFactory as Sipit;
 use PHPUnit_Framework_TestCase;
+use Sipit\SipitFactory as Sipit;
 
 /**
  * Used to test Pings to different IP addresses.
