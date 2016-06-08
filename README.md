@@ -1,4 +1,8 @@
 # Sipit
+
+[![Build Status](https://travis-ci.com/odannyc/sipit.svg?token=JnkwM4mNsdGXvNVnzeSx&branch=master)](https://travis-ci.com/odannyc/sipit)
+[![Total Downloads](https://poser.pugx.org/odannyc/sipit/downloads)](https://packagist.org/packages/odannyc/sipit)
+
 A SIP library to send OPTION pings to publicly open SIP devices out in the wild.
 
 ```php
