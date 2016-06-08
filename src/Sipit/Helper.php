@@ -48,7 +48,7 @@ class Helper
     /**
      * Simple helper to run two methods, verify IP and Port.
      */
-    public static function verifyIpAndPort($ip,$port)
+    public static function verifyIpAndPort($ip, $port)
     {
         self::verifyIpFormat($ip);
         self::verifyPortFormat($port);
