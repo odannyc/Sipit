@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/odannyc/Sipit.svg?branch=master)](https://travis-ci.org/odannyc/Sipit)
 [![Total Downloads](https://poser.pugx.org/odannyc/sipit/downloads)](https://packagist.org/packages/odannyc/sipit)
-[![Coverage Status](https://coveralls.io/repos/github/odannyc/Sipit/badge.svg?branch=master)](https://coveralls.io/github/odannyc/Sipit?branch=master)
+[![codecov](https://codecov.io/gh/odannyc/Sipit/branch/master/graph/badge.svg)](https://codecov.io/gh/odannyc/Sipit)
+
 
 A SIP library to send OPTION pings to publicly open SIP devices out in the wild.
 
