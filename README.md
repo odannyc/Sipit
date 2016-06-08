@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/odannyc/sipit.svg?token=JnkwM4mNsdGXvNVnzeSx&branch=master)](https://travis-ci.com/odannyc/sipit)
 [![Total Downloads](https://poser.pugx.org/odannyc/sipit/downloads)](https://packagist.org/packages/odannyc/sipit)
+[![Coverage Status](https://coveralls.io/repos/github/odannyc/Sipit/badge.svg?branch=master)](https://coveralls.io/github/odannyc/Sipit?branch=master)
 
 A SIP library to send OPTION pings to publicly open SIP devices out in the wild.
 
