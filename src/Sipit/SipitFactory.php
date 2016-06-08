@@ -14,9 +14,12 @@ namespace Sipit;
 /**
  * Factory class for Sipit class.
  */
-class SipitFactory {
-	public static function ping($dstIp = '', $dstPort = 5060) {
-		$result = new Sipit($dstIp, $dstPort);
-		return $result->getParsedResponse();
-	}
+class SipitFactory
+{
+    public static function ping($dstIp = '', $dstPort = 5060)
+    {
+        $result = new Sipit($dstIp, $dstPort);
+        
+        return $result->getParsedResponse();
+    }
 }

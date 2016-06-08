@@ -19,7 +19,6 @@ use Exception;
  */
 class Sipit
 {
-
     /* All Class Variables */
 
     // Source vars
@@ -48,7 +47,7 @@ class Sipit
      * Used to ping an IP address on a specified port number.
      *
      * @param string $ip_address
-     * @param int $port
+     * @param int    $port
      *
      * @return bool
      */
@@ -101,7 +100,7 @@ class Sipit
         $data .= 'Content-Length: 0';
         $data .= "\r\n";
         $data .= "\r\n";
-        
+
         $this->request = $data;
     }
 
@@ -203,5 +202,4 @@ class Sipit
     {
         return $this->parsedResponse;
     }
-
 }
