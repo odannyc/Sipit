@@ -1,6 +1,6 @@
 # Sipit
 
-[![Build Status](https://travis-ci.com/odannyc/sipit.svg?token=JnkwM4mNsdGXvNVnzeSx&branch=master)](https://travis-ci.com/odannyc/sipit)
+[![Build Status](https://travis-ci.org/odannyc/Sipit.svg?branch=master)](https://travis-ci.org/odannyc/Sipit)
 [![Total Downloads](https://poser.pugx.org/odannyc/sipit/downloads)](https://packagist.org/packages/odannyc/sipit)
 [![Coverage Status](https://coveralls.io/repos/github/odannyc/Sipit/badge.svg?branch=master)](https://coveralls.io/github/odannyc/Sipit?branch=master)
 
