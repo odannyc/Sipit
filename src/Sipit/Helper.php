@@ -18,6 +18,11 @@ use Exception;
  */
 class Helper
 {
+	/**
+	 * Takes in an IP address and makes sure its formatted correctly.
+	 * 
+	 * @throws Exception
+	 */
 	public static function verifyIpFormat($ip)
 	{
 		if ($ip == '') {
@@ -27,12 +32,22 @@ class Helper
 			throw new Exception('IP address not in the correct format.');
 		}
 	}
+
+	/**
+	 * Takes in a Port number and makes sure its formatted correctly.
+	 * 
+	 * @throws Exception
+	 */
 	public static function verifyPortFormat($port)
 	{
 		if ($port != '' && ((int)$port < 1024 || (int)$port > 65535)) {
 			throw new Exception('Port number not valid. Must be between 1024 and 65535.');
 		}
 	}
+
+	/**
+	 * Simple helper to run two methods, verify IP and Port
+	 */
 	public static function verifyIpAndPort($ip,$port)
 	{
 		self::verifyIpFormat($ip);
