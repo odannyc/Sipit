@@ -83,7 +83,7 @@ class PingTest extends PHPUnit_Framework_TestCase
     public function testPingWithEmptyPort()
     {
         $dstIp = 'sip.dylphone.com';
-        $dstPort = '';
+        $dstPort = ' ';
         $res = Sipit::ping($dstIp, $dstPort);
 
         $this->assertEquals($res, 200);
