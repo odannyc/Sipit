@@ -66,8 +66,14 @@ class Helper
      */
     public static function verifyPortFormat($port)
     {
-        if ($port != '' && ((int) $port < 1024 || (int) $port > 65535)) {
+        if (trim($port) == '') {
+            $port = 5060;
+        }
+        if (is_int($port) && ($port < 1024 || $port > 65535)) {
             throw new Exception('Port number not valid. Must be between 1024 and 65535.');
+        }
+        if (is_string($port) && !((int) $port)) {
+            throw new Exception('Port number needs to be an integer.');
         }
     }
 
@@ -99,6 +105,22 @@ class Helper
             throw new Exception('Unable to convert domain to IP address.');
         } elseif (self::urlOrIp($ip) == 'ip') {
             return $ip;
+        }
+    }
+
+    /**
+     * If the port number entered was entered as an empty string, null or empty convert to 5060.
+     *
+     * @param type $port
+     *
+     * @return type
+     */
+    public static function convertPortNumber($port)
+    {
+        if (empty($port)) {
+            return 5060;
+        } else {
+            return $port;
         }
     }
 }

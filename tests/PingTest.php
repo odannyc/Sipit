@@ -74,4 +74,18 @@ class PingTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($res, 200);
     }
+
+    /**
+     * Sends an empty string as a port number.
+     *
+     * @return assertion
+     */
+    public function testPingWithEmptyPort()
+    {
+        $dstIp = 'sip.dylphone.com';
+        $dstPort = '';
+        $res = Sipit::ping($dstIp, $dstPort);
+
+        $this->assertEquals($res, 200);
+    }
 }

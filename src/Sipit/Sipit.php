@@ -62,6 +62,9 @@ class Sipit
         /* Convert domain/url to ip, usually by dns */
         $dstIp = Helper::convertEndpointToIp($dstIp);
 
+        /* Convert port number if possible */
+        $dstPort = Helper::convertPortNumber($dstPort);
+
         /* Set the destination port */
         $this->dstPort = $dstPort;
         $this->dstIp = $dstIp;
@@ -79,7 +82,7 @@ class Sipit
         /* Send Request */
         $this->sendRequest();
 
-        /* Read & response */
+        /* Read & parse response */
         $this->readResponse();
         $this->parseResponse();
 
