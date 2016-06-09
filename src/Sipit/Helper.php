@@ -66,7 +66,7 @@ class Helper
      */
     public static function verifyPortFormat($port)
     {
-        if (trim($port) == '') {
+        if (empty($port)) {
             $port = 5060;
         }
         if (is_int($port) && ($port < 1024 || $port > 65535)) {
