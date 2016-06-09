@@ -46,15 +46,21 @@ class Sipit
     /**
      * Used to ping an IP address on a specified port number.
      *
-     * @param string $ip_address
-     * @param int    $port
+     * @param string $dstIp   The Ip address of the request.
+     * @param int    $dstPort The port number of the request.
+     * @param bool   $verify  Do we need to verify the format of the port and ip address?
      *
-     * @return bool
+     * @return int
      */
-    public function __construct($dstIp = '', $dstPort = 5060)
+    public function __construct($dstIp = '', $dstPort = 5060, $verify = true)
     {
-        /* Verify IP address & port are correct */
-        Helper::verifyIpAndPort($dstIp, $dstPort);
+        /* If verify is true, make sure ip and port are formatted correctly */
+        if ($verify) {
+            Helper::verifyEndpointAndPort($dstIp, $dstPort);
+        }
+
+        /* Convert domain/url to ip, usually by dns */
+        $dstIp = Helper::convertEndpointToIp($dstIp);
 
         /* Set the destination port */
         $this->dstPort = $dstPort;

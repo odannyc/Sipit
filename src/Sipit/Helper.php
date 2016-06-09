@@ -18,18 +18,44 @@ use Exception;
  */
 class Helper
 {
+    /* This regex checks to see if string has 2 words joined by a period. So at the bare minimum: sample.com */
+    private static $urlRegex = '/\w+\.[a-zA-Z]{1,10}$/';
+
+    /* Needs to be 4 octects with period in between. Octects need to be 1-255 */
+    private static $ipRegex = '/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/';
+
     /**
      * Takes in an IP address and makes sure its formatted correctly.
      *
      * @throws Exception
      */
-    public static function verifyIpFormat($ip)
+    public static function verifyEndpointFormat($endpoint)
     {
-        if ($ip == '') {
+        $endpointType = self::urlOrIp($endpoint);
+
+        if ($endpoint == '') {
             throw new Exception('IP Address not provided.');
         }
-        if (!preg_match('/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/', $ip)) {
-            throw new Exception('IP address not in the correct format.');
+        if ($endpointType == 'none') {
+            throw new Exception('Endpoint not in correct format.');
+        }
+    }
+
+    /**
+     * Checks to see if the endpoint is an ip address or url.
+     *
+     * @param string $endpoint
+     *
+     * @return string
+     */
+    public static function urlOrIp($endpoint)
+    {
+        if (preg_match(self::$urlRegex, $endpoint)) {
+            return 'url';
+        } elseif (preg_match(self::$ipRegex, $endpoint)) {
+            return 'ip';
+        } else {
+            return 'none';
         }
     }
 
@@ -48,9 +74,31 @@ class Helper
     /**
      * Simple helper to run two methods, verify IP and Port.
      */
-    public static function verifyIpAndPort($ip, $port)
+    public static function verifyEndpointAndPort($ip, $port)
     {
-        self::verifyIpFormat($ip);
+        self::verifyEndpointFormat($ip);
         self::verifyPortFormat($port);
+    }
+
+    /**
+     * Converts a url/domain to an IP address.
+     *
+     * @param string $endpoint The endpoint to convert.
+     *
+     * @return string Ip address of url/domain.
+     */
+    public static function convertEndpointToIp($endpoint)
+    {
+        if (self::urlOrIp($endpoint) == 'url') {
+            $ip = gethostbyname($endpoint);
+        } else {
+            $ip = $endpoint;
+        }
+
+        if (self::urlOrIp($ip) != 'ip') {
+            throw new Exception('Unable to convert domain to IP address.');
+        } elseif (self::urlOrIp($ip) == 'ip') {
+            return $ip;
+        }
     }
 }
