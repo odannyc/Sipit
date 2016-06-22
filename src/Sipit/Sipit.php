@@ -124,7 +124,7 @@ class Sipit
      */
     protected function buildCallId()
     {
-        $callId = 'callid:' . md5(uniqid()) . ';';
+        $callId = 'callid:'.md5(uniqid()).';';
         return $callId;
     }
 
