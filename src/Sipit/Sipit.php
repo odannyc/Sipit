@@ -97,11 +97,15 @@ class Sipit
      */
     protected function buildRequest()
     {
+        /* We need to build some stuff before the actual request */
+        /* Building the MD5 has first also know as the Call ID */
+        $callId = $this->buildCallId();
+
         $data = "{$this->method} sip:{$this->dstIp}:{$this->dstPort} SIP/2.0\r\n";
         $data .= "Via: SIP/2.0/UDP {$this->srcIp}:{$this->srcPort};rport;branch=z9hG4bK572601\r\n";
         $data .= "From: <sip:ping@sipit.com>;tag=10877\r\n";
         $data .= "To: <sip:{$this->dstIp}:{$this->dstPort}>\r\n";
-        $data .= "Call-ID: {md5(uniqid())}@{$this->srcIp}\r\n";
+        $data .= "Call-ID: {$callId}@{$this->srcIp}\r\n";
         $data .= "CSeq: 20 OPTIONS\r\n";
         $data .= "Contact: <sip:ping@{$this->srcIp}:{$this->srcPort}>\r\n";
         $data .= "Max-Forwards: 70\r\n";
@@ -111,6 +115,17 @@ class Sipit
         $data .= "\r\n";
 
         $this->request = $data;
+    }
+
+    /**
+     * Builds the call ID needed for the request.
+     *
+     * @return string Call Id hash
+     */
+    protected function buildCallId()
+    {
+        $callId = 'callid:' . md5(uniqid()) . ';';
+        return $callId;
     }
 
     /**
@@ -210,5 +225,25 @@ class Sipit
     public function getParsedResponse()
     {
         return $this->parsedResponse;
+    }
+
+    /**
+     * Returns the request that was sent.
+     *
+     * @return string The request that was sent to the endpoint
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * Returns the response in a none formatted way.
+     *
+     * @return string The response of the request
+     */
+    public function getBareResponse()
+    {
+        return $this->response;
     }
 }
