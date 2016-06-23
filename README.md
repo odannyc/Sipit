@@ -23,14 +23,14 @@ Sipit::ping($destination_ip, $destination_port); // 200
 ## Installation
 The best way to install this library is with **Composer**.
 
-    composer require odannyc/Sipit
+    composer require odannyc/sipit
 
 **Or**
 
 ```php
 {
   "require": {
-    "odannyc/Sipit": "*"
+    "odannyc/sipit": "*"
   }
 }
 ```
