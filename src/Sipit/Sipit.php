@@ -278,7 +278,7 @@ class Sipit
     public function getResponse()
     {
         /* Instantiate the response array */
-        $response = []];
+        $response = [];
 
         /* Explode request into sections and parse */
         $parsedRequest = [];
