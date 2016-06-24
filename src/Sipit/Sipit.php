@@ -34,7 +34,9 @@ class Sipit
 
     // Reponse
     protected $response;
-    protected $parsedResponse;
+    protected $responseCode;
+    protected $responseMessage;
+    protected $responseConcat;
 
     // Request Data
     protected $request;
@@ -203,10 +205,10 @@ class Sipit
     protected function parseResponse()
     {
         if (!empty($this->response)) {
-            preg_match('/^SIP\/2\.0 ([0-9]{3})/', $this->response, $this->parsedResponse);
-            $this->parsedResponse = $this->parsedResponse[1];
-        } else {
-            $this->parsedResponse = 'No Response';
+            preg_match('/^SIP\/2\.0 (([0-9]{3}) (\w+))/', $this->response, $parsedResponse);
+            $this->responseCode = $parsedResponse[2];
+            $this->responseMessage = $parsedResponse[3];
+            $this->responseConcat = $parsedResponse[1];
         }
     }
 
@@ -219,13 +221,33 @@ class Sipit
     }
 
     /**
-     * Just returns parsed response.
+     * Returns the parsed response code.
      *
      * @return int The response of the connection
      */
-    public function getParsedResponse()
+    public function getResponseCode()
     {
-        return $this->parsedResponse;
+        return $this->responseCode;
+    }
+
+    /**
+     * Returns the parsed response message.
+     *
+     * @return string The response of the connection
+     */
+    public function getResponseMessage()
+    {
+        return $this->responseMessage;
+    }
+
+    /**
+     * Returns the concatenated response code and message.
+     *
+     * @return string The response of the connection
+     */
+    public function getResponseConcat()
+    {
+        return $this->responseConcat;
     }
 
     /**
@@ -246,5 +268,45 @@ class Sipit
     public function getBareResponse()
     {
         return $this->response;
+    }
+
+    /**
+     * Returns the full arrayed response.
+     *
+     * @return array
+     */
+    public function getResponse()
+    {
+        /* Instantiate the response array */
+        $response = array();
+
+        /* Explode request into sections and parse */
+        $parsedRequest = array();
+        $originalRequest = explode("\r\n", $this->request);
+        foreach($originalRequest as $req) {
+            if (!empty($req)) {
+                $identifier = !empty(substr($req, 0, strpos($req, ':'))) ? substr($req, 0, strpos($req, ':')) : $res;
+                $parsedRequest[$identifier] = $req;
+            }
+        }
+
+        /* Explode response and parse */
+        $parsedResponse = array();
+        $originalResponse = explode("\r\n", $this->response);
+        foreach($originalResponse as $res) {
+            if (!empty($res)) {
+                $identifier = !empty(substr($res, 0, strpos($res, ':'))) ? substr($res, 0, strpos($res, ':')) : $res;
+                $parsedResponse[$identifier] = $res;
+            }
+        }
+
+        /* Start formatting the response array */
+        $response['request_full'] = $parsedRequest;
+        $response['response_code'] = $this->responseCode;
+        $response['response_message'] = $this->responseMessage;
+        $response['response_concat'] = $this->responseConcat;
+        $response['response_full'] = $parsedResponse;
+
+        return $response;
     }
 }

@@ -20,6 +20,6 @@ class SipitFactory
     {
         $result = new Sipit($dstIp, $dstPort);
 
-        return $result->getParsedResponse();
+        return $result->getResponse();
     }
 }

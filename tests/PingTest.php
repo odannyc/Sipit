@@ -30,7 +30,7 @@ class PingTest extends PHPUnit_Framework_TestCase
         $dstPort = 5060;
         $res = Sipit::ping($dstIp, $dstPort);
 
-        $this->assertEquals($res, 200);
+        $this->assertEquals($res['response_code'], 200);
     }
 
     /**
@@ -44,7 +44,7 @@ class PingTest extends PHPUnit_Framework_TestCase
         $dstPort = 5060;
         $res = Sipit::ping($dstIp, $dstPort);
 
-        $this->assertEquals($res, 'No Response');
+        $this->assertEquals($res['response_code'], '');
     }
 
     /**
@@ -58,7 +58,7 @@ class PingTest extends PHPUnit_Framework_TestCase
         $dstPort = 5060;
         $res = Sipit::ping($dstIp, $dstPort);
 
-        $this->assertEquals($res, 200);
+        $this->assertEquals($res['response_code'], 200);
     }
 
     /**
@@ -72,7 +72,7 @@ class PingTest extends PHPUnit_Framework_TestCase
         $dstPort = 5060;
         $res = Sipit::ping($dstIp, $dstPort, false);
 
-        $this->assertEquals($res, 200);
+        $this->assertEquals($res['response_code'], 200);
     }
 
     /**
@@ -82,10 +82,10 @@ class PingTest extends PHPUnit_Framework_TestCase
      */
     public function testPingWithEmptyPort()
     {
-        $dstIp = 'sip.dylphone.com';
+        $dstIp = 'sip.broadvoice.com';
         $dstPort = ' ';
         $res = Sipit::ping($dstIp, $dstPort);
 
-        $this->assertEquals($res, 200);
+        $this->assertEquals($res['response_code'], 403);
     }
 }
