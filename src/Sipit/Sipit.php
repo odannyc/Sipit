@@ -278,12 +278,12 @@ class Sipit
     public function getResponse()
     {
         /* Instantiate the response array */
-        $response = array();
+        $response = []];
 
         /* Explode request into sections and parse */
-        $parsedRequest = array();
+        $parsedRequest = [];
         $originalRequest = explode("\r\n", $this->request);
-        foreach($originalRequest as $req) {
+        foreach ($originalRequest as $req) {
             if (!empty($req)) {
                 $identifier = !empty(substr($req, 0, strpos($req, ':'))) ? substr($req, 0, strpos($req, ':')) : $res;
                 $parsedRequest[$identifier] = $req;
@@ -291,9 +291,9 @@ class Sipit
         }
 
         /* Explode response and parse */
-        $parsedResponse = array();
+        $parsedResponse = [];
         $originalResponse = explode("\r\n", $this->response);
-        foreach($originalResponse as $res) {
+        foreach ($originalResponse as $res) {
             if (!empty($res)) {
                 $identifier = !empty(substr($res, 0, strpos($res, ':'))) ? substr($res, 0, strpos($res, ':')) : $res;
                 $parsedResponse[$identifier] = $res;
