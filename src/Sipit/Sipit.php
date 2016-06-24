@@ -307,6 +307,12 @@ class Sipit
         $response['response_concat'] = $this->responseConcat;
         $response['response_full'] = $parsedResponse;
 
+        if (empty($this->response)) {
+            $response['success'] = false;
+        } else {
+            $response['success'] = true;
+        }
+
         return $response;
     }
 }
