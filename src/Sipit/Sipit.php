@@ -309,6 +309,7 @@ class Sipit
 
         if (empty($this->response)) {
             $response['success'] = false;
+            $response['error'] = 'No Response';
         } else {
             $response['success'] = true;
         }
