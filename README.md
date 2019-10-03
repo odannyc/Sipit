@@ -5,7 +5,7 @@
 [![StyleCI](https://styleci.io/repos/60649114/shield)](https://styleci.io/repos/60649114)
 
 
-A SIP library to send OPTION pings to publicly open SIP devices out in the wild.
+A SIP library to send OPTION pings to publicly open SIP devices out in the wild. SIP (Session Initiation Protocol) is a protocol used in VoIP communications allowing users to make voice and video calls.
 
 ```php
 use Sipit\SipitFactory as Sipit;
@@ -39,7 +39,7 @@ Right now Sipit only has one method, and that is to ping SIP devices, in the fut
 
 ```php
 use sipit\SipitFactory as Sipit;
-    
+
 Sipit::ping('192.168.1.10', 5060);
 ```
 The response will look like this:
