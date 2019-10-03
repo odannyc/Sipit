@@ -261,7 +261,7 @@ class Sipit
     }
 
     /**
-     * Returns the response in a none formatted way.
+     * Returns the response in a non-formatted way.
      *
      * @return string The response of the request
      */
